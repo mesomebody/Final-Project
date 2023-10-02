@@ -1,3 +1,5 @@
+#As of 10/02/2023, this code is opsolete
+
 #imports tkinter as tk
 import tkinter as tk
 import ctypes as ct
