@@ -7,9 +7,11 @@ Final Project for my SDEV 140 Class, Intro to Software Development
 - All of the buttons work except {Adv.} and {DisAdv.}
 - The main functions of the application works
 - Put everything into object-orientated programming
+- made the Adv. and DisAdv work
 
 # What I need help with
 Nothing right now, everything is going pretty smoothly
 
 # What my next step is
-- Making the Adv. and DisAdv. buttons work.
+- do testing
+- make manual
