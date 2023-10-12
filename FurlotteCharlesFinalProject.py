@@ -4,6 +4,8 @@ import tkinter as tk
 import ctypes as ct
 #import random module for dice
 import random
+#imports module for using images
+from PIL import ImageTk, Image  
 
 #creates a dark title bar(not my code https://stackoverflow.com/questions/17251016/python-tkinter-how-to-change-the-windows-border-color)
 def dark_title_bar(window):#I did not right the code in this function
@@ -39,10 +41,49 @@ class main:
         self.createInputs()
         #places buttons and entry field
         self.placeInputs()
+        #create the images and place them in the bottom left and the bottom right
+        self.createAndPlaceImages()
+
+    def createAndPlaceImages(self):
+        #open the images
+        self.tempImage1 = Image.open("DiceImageOne.png")
+        self.tempImage2 = Image.open("DiceImageTwo.png")
+        #resize the images
+        self.tempImage1 = self.tempImage1.resize((110, 110))
+        self.tempImage2 = self.tempImage2.resize((110, 110))
+        #Transform into a photo image for tkinter to use
+        self.tempImage1B = ImageTk.PhotoImage(self.tempImage1)
+        self.tempImage2B = ImageTk.PhotoImage(self.tempImage2)
+        #create image label objects
+        self.image1 = tk.Label(self.window, image = self.tempImage1B, borderwidth = 0)
+        self.image2 = tk.Label(self.window, image = self.tempImage2B, borderwidth = 0)
+        #place the images in the grids
+        self.image1.grid(row = 6, column = 1)
+        self.image2.grid(row = 6, column = 4)
 
     #rolls the dice
     def rollDice(self, size):
         return  random.randint(1, size)
+    #rolls the dice at advantage
+    def rollDiceAdv(self, size):
+        #stores both rolls of the dice
+        self.tempDiceNum1 = random.randint(1, size)
+        self.tempDiceNum2 = random.randint(1, size)
+        #finds the biggest rolls of the dice and returns it
+        if self.tempDiceNum1 >= self.tempDiceNum2:
+            return self.tempDiceNum1
+        else:
+            return self.tempDiceNum2
+    #rolls the dice at disadvantage
+    def rollDiceDisAdv(self, size):
+        #stores both rolls of the dice
+        self.tempDiceNum1 = random.randint(1, size)
+        self.tempDiceNum2 = random.randint(1, size)
+        #finds the smallest rolls of the dice and returns it
+        if self.tempDiceNum1 <= self.tempDiceNum2:
+            return self.tempDiceNum1
+        else:
+            return self.tempDiceNum2
 
     #processes input string and does the calculations of dice rolling and then .pack() the info to a second window
     def calculations(self, input):
@@ -56,7 +97,16 @@ class main:
         self.whatToAdd = ''
         self.numberToAdd = ''
         self.finalNumber = 0
+        #initialize both {self.Adv} and {self.DisAdv} to false
+        self.Adv = False
+        self.DisAdv = False
         #gets the number of times to roll
+        if input[self.tempNum] == 'A':
+            self.tempNum += 4
+            self.Adv = True
+        elif input[self.tempNum] == 'D':
+            self.tempNum += 7
+            self.DisAdv = True
         while input[self.tempNum] != 'D':
             self.timesToRoll += input[self.tempNum]
             self.tempNum += 1
@@ -70,18 +120,34 @@ class main:
         if self.tempNum < self.inputLength:
             self.whatToAdd = input[self.tempNum]
             self.tempNum += 1
-        #gets what to add or subtract if there there is anything to add or subtractg
+        #gets what to add or subtract if there there is anything to add or subtract
         while self.tempNum < self.inputLength:
             self.numberToAdd += input[self.tempNum]
             self.tempNum += 1
         #resets {self.temNum}
         self.tempNum = 0
         #does the dice rolling and calculations
-        while self.tempNum < int(self.timesToRoll):
-            #keep track of how many times things have been rolled
-            self.tempNum += 1
-            #rolls the dice and adds it to the total
-            self.finalNumber += self.rollDice(int(self.whatToRoll))
+        #if {Adv.}
+        if self.Adv == True:
+            while self.tempNum < int(self.timesToRoll):
+                #keep track of how many times things have been rolled
+                self.tempNum += 1
+                #rolls the dice and adds it to the total
+                self.finalNumber += self.rollDiceAdv(int(self.whatToRoll))
+        #elif {DisAdv.}
+        elif self.DisAdv == True:
+            while self.tempNum < int(self.timesToRoll):
+                #keeps track of how many times things have been rolled
+                self.tempNum += 1
+                #rolls the dice and adds it to the total
+                self.finalNumber += self.rollDiceDisAdv(int(self.whatToRoll))
+        #else
+        else:
+            while self.tempNum < int(self.timesToRoll):
+                #keep track of how many times things have been rolled
+                self.tempNum += 1
+                #rolls the dice and adds it to the total
+                self.finalNumber += self.rollDice(int(self.whatToRoll))
         #displays the dice rolls
         if self.whatToAdd == '+':
             #adds {self.numberToAdd}
@@ -102,7 +168,7 @@ class main:
     #enters the info from the {self.entry} field for processing to {}
     def enter(self):
         self.getEntry = str(self.entry.get())
-        self.entry.delete(0, 10)
+        self.entry.delete(0, 100)
         self.calculations(self.getEntry)
 
     #inputs the buttons onto the {self.entry} field
@@ -133,6 +199,7 @@ class main:
         self.buttonAdd = tk.Button(self.window,  text = '+', command = lambda: self.buttonInput('+'), width = 15, height = 7, bg = '#555555', fg = '#dddddd')
         self.buttonDisAdv = tk.Button(self.window,  text = 'DisAdv.', command = lambda: self.buttonInput('DisAdv.'), width = 15, height = 7, bg = '#555555', fg = '#dddddd')
         self.buttonAdv = tk.Button(self.window,  text = 'Adv.', command = lambda: self.buttonInput('Adv.'), width = 15, height = 7, bg = '#555555', fg = '#dddddd')
+        self.exit = tk.Button(self.window, text = 'exit', command = exit, width = 32, height = 7, bg = '#555555', fg = '#dddddd')
 
     #places all buttons and entry stuff from {createInputs()}
     def placeInputs(self):
@@ -158,6 +225,8 @@ class main:
         self.buttonDice.grid(row = 5, column = 2)
         self.buttonEnter.grid(row = 5, column = 3)
         self.buttonAdv.grid(row = 5, column = 4)
+
+        self.exit.grid(row = 6, column = 2, columnspan = 2)
     #changes the look of the app, mainly changes the color.
     def changeLooks(self, windowName):
         #set title of {self.window}
@@ -170,6 +239,9 @@ class main:
         
         self.window.mainloop()
 
+
 #runs the code
 window = main()
+
 window.runWindow()
+window.displayImages()
