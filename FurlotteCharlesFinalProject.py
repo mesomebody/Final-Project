@@ -4,8 +4,6 @@ import tkinter as tk
 import ctypes as ct
 #import random module for dice
 import random
-#imports module for using images
-from PIL import ImageTk, Image  
 
 #creates a dark title bar(not my code https://stackoverflow.com/questions/17251016/python-tkinter-how-to-change-the-windows-border-color)
 def dark_title_bar(window):#I did not right the code in this function
@@ -46,17 +44,11 @@ class main:
 
     def createAndPlaceImages(self):
         #open the images
-        self.tempImage1 = Image.open("DiceImageOne.png")
-        self.tempImage2 = Image.open("DiceImageTwo.png")
-        #resize the images
-        self.tempImage1 = self.tempImage1.resize((110, 110))
-        self.tempImage2 = self.tempImage2.resize((110, 110))
-        #Transform into a photo image for tkinter to use
-        self.tempImage1B = ImageTk.PhotoImage(self.tempImage1)
-        self.tempImage2B = ImageTk.PhotoImage(self.tempImage2)
+        self.tempImage1 = tk.PhotoImage(file = 'DiceImageOne.png')
+        self.tempImage2 = tk.PhotoImage(file = 'DiceImageTwo.png')
         #create image label objects
-        self.image1 = tk.Label(self.window, image = self.tempImage1B, borderwidth = 0)
-        self.image2 = tk.Label(self.window, image = self.tempImage2B, borderwidth = 0)
+        self.image1 = tk.Label(self.window, image = self.tempImage1, borderwidth = 0, text = 'Picture of Dice')
+        self.image2 = tk.Label(self.window, image = self.tempImage2, borderwidth = 0, text = 'Picture of Dice')
         #place the images in the grids
         self.image1.grid(row = 6, column = 1)
         self.image2.grid(row = 6, column = 4)
@@ -164,7 +156,7 @@ class main:
         else:
             self.final = tk.Label(self.window2, text = (self.timesToRoll, 'D', self.whatToRoll, '=', self.finalNumber))
             self.final.pack()
-        
+
     #enters the info from the {self.entry} field for processing to {}
     def enter(self):
         self.getEntry = str(self.entry.get())
