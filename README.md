@@ -8,10 +8,11 @@ Final Project for my SDEV 140 Class, Intro to Software Development
 - The main functions of the application works
 - Put everything into object-orientated programming
 - made the Adv. and DisAdv work
+- Made manual
+- Wrote tests and did testing
 
 # What I need help with
 Nothing right now, everything is going pretty smoothly
 
 # What my next step is
-- do testing
-- make manual
+Nothing, project is done
