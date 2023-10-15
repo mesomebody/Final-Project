@@ -1,0 +1,29 @@
+﻿This is the manual for how to run and use the dice calculator.
+
+
+Running the Code:
+1. Open FurlotteCharlesFinalProject in python environment
+2. Run the code
+
+
+Using the Calculator:
+
+
+1. Decide if you want the dice to roll at advantage, disadvantage or just normal.
+   1. Advantage means it rolls twice and takes the highest roll
+   2. Disadvantage means it rolls twice and takes the lowest roll 
+   3. Normal only roll the dice once
+2. If you want to roll with advantage click the ‘Adv.’ button, for disadvantage press the ‘DisAdv.’ button and for normal dont put in anything.
+                Example input: ‘Adv.
+3. Next decide how many dice you want to roll enter that number
+                Example input: Adv.1
+4. Click to ‘D’ button to signify that you want to specify how many sides you want each die to have
+                Example input: Adv.1D
+5. Enter in how many sides you want the dice to have
+                Example input: Adv.1D20
+6. If you want to add or subtract a number from the roll click on the ‘-’ or ‘+’ button or skip this step and step number 7 if you do not want to
+                Example input: Adv1d20+
+7. Enter the number that you want to add or subtract
+                Example input: Adv.1d20+5
+8. Click the Enter button and your results will pop up on a new screen. (it might be behind the main screen)
+                Example Output: 1 D 20 + 5 = 16
